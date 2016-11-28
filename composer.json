@@ -1,0 +1,19 @@
+{
+  "name": "dhaarbrink/wsdl2php",
+  "description": "Generate php classes from wsdl",
+  "minimum-stability": "dev",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": { "": "src/" }
+  },
+  "authors": [
+    {
+      "name": "Dennis Haarbrink",
+      "email": "dennis@nonmagna.nl"
+    }
+  ],
+  "require": {
+    "roave/security-advisories": "dev-master",
+    "symfony/console": "^3.1"
+  }
+}
