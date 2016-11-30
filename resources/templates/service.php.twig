@@ -1,0 +1,56 @@
+{{ "<?php" }}
+{% import _self as tpl %}
+
+{% macro paramdoc(type, name) %}
+    * @param {{ type }} ${{ name }}
+{% endmacro %}
+
+{% macro param(type, name) %}
+{{ type }} ${{ name }}
+{% endmacro %}
+
+{% macro params(params) %}
+{% import _self as tpl %}
+{% for param in params %}{{ tpl.param(param.type, param.name) }}{% endfor %}
+{% endmacro %}
+
+{% macro operation(name, parameters, returnType, targetNamespace) %}
+    {% import _self as tpl %}
+
+    /**
+{% for param in parameters %} {{ tpl.paramdoc(param.type, param.name) }}{% endfor %}
+     * @return {{ returnType }}
+     */
+    public function {{ name }}({{ tpl.params(parameters)|trim }})
+    {
+        return $this->__soapCall('{{ name }}', [$parameters], [
+            'uri' => '{{ targetNamespace }}',
+        ]);
+    }
+
+{% endmacro %}
+
+{% if namespace %}
+namespace {{ namespace }};
+{% endif %}
+
+{% for type in types %}
+class {{ type.name }}
+{
+    {% for member in type.members %}
+    /** @var {{ member.type }} ${{ member.name }} */
+    public ${{ member.name }};
+{% endfor %}
+}
+
+{% endfor %}
+
+class {{ serviceName }} extends \SoapClient
+{
+    protected $classmap = [
+        {% for type in types %}
+        '{{ type.name }}' => '{% if namespace %}{{ namespace }}\{% endif %}{{ type.name }}',
+        {% endfor %}
+    ];
+{% for operation in operations %}{{ tpl.operation(operation.name, operation.parameters, operation.returnType, targetNamespace) }}{% endfor %}
+}

@@ -1,14 +1,14 @@
 {
   "chmod": "0755",
   "directories": [
-    "src"
+    "src",
+    "resources"
   ],
   "files": [
-    "LICENSE"
   ],
   "finder": [
     {
-      "name": "*.php",
+      "name": ["*.php", "*.yml"],
       "exclude": ["Tests"],
       "in": "vendor"
     }

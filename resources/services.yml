@@ -1,0 +1,15 @@
+services:
+    wsdl.loader:
+        class: Nm\Wsdl\WsdlLoader
+
+    wsdl.writer:
+        class: Nm\Writer\ServiceWriter
+        arguments: ["@twig.environment"]
+
+    twig.loader:
+        class: Twig_Loader_Filesystem
+        arguments: ["resources/templates"]
+
+    twig.environment:
+        class: Twig_Environment
+        arguments: ["@twig.loader", []]

@@ -1,0 +1,3 @@
+parameters:
+    template.dir: "blabla"
+    twig.environment.cache: "var/cache"
