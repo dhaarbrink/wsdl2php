@@ -12,6 +12,10 @@ class ServiceWriter
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
+
+        /** @var \Twig_Loader_Filesystem $loader */
+        $loader = $twig->getLoader();
+        $loader->addPath(ROOT_DIR . '/resources/templates');
     }
 
     public function write(Definition $definition, $directory)

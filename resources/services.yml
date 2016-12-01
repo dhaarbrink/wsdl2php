@@ -8,7 +8,6 @@ services:
 
     twig.loader:
         class: Twig_Loader_Filesystem
-        arguments: ["resources/templates"]
 
     twig.environment:
         class: Twig_Environment
