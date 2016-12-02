@@ -22,6 +22,7 @@
     "twig/twig": "^1.28",
     "symfony/dependency-injection": "^3.0",
     "symfony/config": "^3.0",
-    "symfony/yaml": "^3.0"
+    "symfony/yaml": "^3.0",
+    "symfony/serializer": "^3.0"
   }
 }

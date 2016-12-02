@@ -15,10 +15,19 @@ class ServiceWriter
 
         /** @var \Twig_Loader_Filesystem $loader */
         $loader = $twig->getLoader();
-        $loader->addPath(ROOT_DIR . '/resources/templates');
+        $loader->addPath(ROOT_DIR.'/resources/templates');
     }
 
-    public function write(Definition $definition, $directory)
+    /**
+     * @param Definition $definition
+     * @param string     $directory
+     * @param            $camelCase
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function write(Definition $definition, $directory, $camelCase)
     {
         $rendered = $this->twig->render('service.php.twig', [
             'serviceName'     => $definition->getServiceName(),
@@ -26,6 +35,7 @@ class ServiceWriter
             'targetNamespace' => $definition->getTargetNamespace(),
             'namespace'       => $definition->getNamespace(),
             'types'           => $definition->getTypes(),
+            'camelcase'       => $camelCase,
         ]);
 
         file_put_contents($directory.DIRECTORY_SEPARATOR.$definition->getServiceName().'.php', $rendered);
