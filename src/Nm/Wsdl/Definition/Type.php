@@ -4,6 +4,7 @@ namespace Nm\Wsdl\Definition;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
 class Type
 {
@@ -44,6 +45,12 @@ class Type
         $this->name = $name;
     }
 
+    public function getNameCamelCased()
+    {
+        $converter = new CamelCaseToSnakeCaseNameConverter(null, false);
+        return $converter->denormalize($this->name);
+    }
+
     /**
      * @return Collection|Member[]
      */
@@ -59,6 +66,4 @@ class Type
     {
         $this->members = $members;
     }
-
-
 }

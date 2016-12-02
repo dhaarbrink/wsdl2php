@@ -23,6 +23,7 @@ class Wsdl2phpCommand extends Command implements ContainerAwareInterface
             ->addArgument('wsdl', InputArgument::REQUIRED, 'The WSDL file to parse')
             ->addArgument('out', InputArgument::REQUIRED, 'The directory to output file(s) to')
             ->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'The namespace the generated classes should be in')
+            ->addOption('camelcase', null, InputOption::VALUE_NONE, 'Whether to UpperCamelCase type names')
             ->setDescription('Creates classes based on a WSDL')
         ;
     }
@@ -32,6 +33,7 @@ class Wsdl2phpCommand extends Command implements ContainerAwareInterface
         $wsdl = $input->getArgument('wsdl');
         $out_dir = $input->getArgument('out');
         $namespace = $input->getOption('namespace');
+        $camelcase = $input->getOption('camelcase');
 
         /** @var WsdlLoader $loader */
         $loader = $this->container->get('wsdl.loader');
@@ -41,7 +43,7 @@ class Wsdl2phpCommand extends Command implements ContainerAwareInterface
 
         /** @var ServiceWriter $writer */
         $writer = $this->container->get('wsdl.writer');
-        $writer->write($definition, $out_dir);
+        $writer->write($definition, $out_dir, $camelcase);
 
         $output->writeln('Done');
     }

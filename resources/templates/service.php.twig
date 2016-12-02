@@ -49,7 +49,8 @@ class {{ serviceName }} extends \SoapClient
 {
     protected $classmap = [
         {% for type in types %}
-        '{{ type.name }}' => '{% if namespace %}{{ namespace }}\{% endif %}{{ type.name }}',
+        {% set typeName %}{% if camelcase %}{{ type.nameCamelCased }}{% else %}{{ type.name }}{% endif %}{% endset %}
+        '{{ type.name }}' => '{% if namespace %}{{ namespace }}\{% endif %}{{ typeName }}',
         {% endfor %}
     ];
 
