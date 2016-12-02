@@ -28,6 +28,15 @@ class ServiceWriter
             'types'           => $definition->getTypes(),
         ]);
 
-        file_put_contents($directory.DIRECTORY_SEPARATOR.$definition->getServiceName().'.php', $rendered);
+        $fullPath = $directory.DIRECTORY_SEPARATOR.$definition->getServiceName().'.php';
+
+        if (!is_writable($directory)) {
+            throw new Exception\NotWritableException(sprintf(
+                'Directory \'%s\' is not writable or does not exist',
+                $directory
+            ));
+        }
+
+        file_put_contents($fullPath, $rendered);
     }
 }
